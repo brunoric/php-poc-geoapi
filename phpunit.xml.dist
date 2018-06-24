@@ -6,6 +6,7 @@
          backupGlobals="false"
          colors="true"
          bootstrap="vendor/autoload.php"
+         defaultTestSuite="unit"
 >
     <php>
         <ini name="error_reporting" value="-1" />
@@ -18,8 +19,12 @@
     </php>
 
     <testsuites>
-        <testsuite name="Project Test Suite">
-            <directory>tests/</directory>
+        <testsuite name="unit">
+            <directory>./tests/</directory>
+            <exclude>./tests/Controller</exclude>
+        </testsuite>
+        <testsuite name="functional">
+            <directory>./tests/Controller</directory>
         </testsuite>
     </testsuites>
 
