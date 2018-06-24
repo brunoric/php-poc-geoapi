@@ -8,6 +8,8 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace App\Entity;
 
 class Customer
@@ -121,8 +123,8 @@ class Customer
         return new self(
             $customer['user_id'],
             $customer['name'],
-            $customer['latitude'],
-            $customer['longitude']
+            floatval($customer['latitude']),
+            floatval($customer['longitude'])
         );
     }
 }

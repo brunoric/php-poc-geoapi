@@ -8,6 +8,8 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace App\Tests\Repository;
 
 use App\Entity\Customer;
@@ -40,8 +42,8 @@ PAYLOAD;
             [
                 $payload,
                 [
-                    new Customer(12, 'Christina McArdle', '52.986375',  '-6.043701'),
-                    new Customer(1, 'Alice Cahill', '51.92893', '-10.27699'),
+                    new Customer(12, 'Christina McArdle', 52.986375,  -6.043701),
+                    new Customer(1, 'Alice Cahill', 51.92893, -10.27699),
                 ]
             ]
         ];
@@ -154,89 +156,89 @@ PAYLOAD;
             [
                 ['name', 'asc'],
                 [
-                    new Customer(12, 'Christina McArdle', '52.986375', '-6.043701'),
-                    new Customer(1, 'Alice Cahill', '51.92893', '-10.27699'),
+                    new Customer(12, 'Christina McArdle', 52.986375, -6.043701),
+                    new Customer(1, 'Alice Cahill', 51.92893, -10.27699),
                 ],
                 [
-                    new Customer(1, 'Alice Cahill', '51.92893', '-10.27699'),
-                    new Customer(12, 'Christina McArdle', '52.986375', '-6.043701'),
+                    new Customer(1, 'Alice Cahill', 51.92893, -10.27699),
+                    new Customer(12, 'Christina McArdle', 52.986375, -6.043701),
                 ],
             ],
             [
                 ['name', 'desc'],
                 [
-                    new Customer(12, 'Christina McArdle', '52.986375', '-6.043701'),
-                    new Customer(1, 'Alice Cahill', '51.92893', '-10.27699'),
+                    new Customer(12, 'Christina McArdle', 52.986375, -6.043701),
+                    new Customer(1, 'Alice Cahill', 51.92893, -10.27699),
                 ],
                 [
-                    new Customer(12, 'Christina McArdle', '52.986375', '-6.043701'),
-                    new Customer(1, 'Alice Cahill', '51.92893', '-10.27699'),
+                    new Customer(12, 'Christina McArdle', 52.986375, -6.043701),
+                    new Customer(1, 'Alice Cahill', 51.92893, -10.27699),
                 ],
             ],
             [
                 ['id', 'asc'],
                 [
-                    new Customer(12, 'Christina McArdle', '52.986375', '-6.043701'),
-                    new Customer(1, 'Alice Cahill', '51.92893', '-10.27699'),
+                    new Customer(12, 'Christina McArdle', 52.986375, -6.043701),
+                    new Customer(1, 'Alice Cahill', 51.92893, -10.27699),
                 ],
                 [
-                    new Customer(1, 'Alice Cahill', '51.92893', '-10.27699'),
-                    new Customer(12, 'Christina McArdle', '52.986375', '-6.043701'),
+                    new Customer(1, 'Alice Cahill', 51.92893, -10.27699),
+                    new Customer(12, 'Christina McArdle', 52.986375, -6.043701),
                 ],
             ],
             [
                 ['id', 'desc'],
                 [
-                    new Customer(12, 'Christina McArdle', '52.986375', '-6.043701'),
-                    new Customer(1, 'Alice Cahill', '51.92893', '-10.27699'),
+                    new Customer(12, 'Christina McArdle', 52.986375, -6.043701),
+                    new Customer(1, 'Alice Cahill', 51.92893, -10.27699),
                 ],
                 [
-                    new Customer(12, 'Christina McArdle', '52.986375', '-6.043701'),
-                    new Customer(1, 'Alice Cahill', '51.92893', '-10.27699'),
+                    new Customer(12, 'Christina McArdle', 52.986375, -6.043701),
+                    new Customer(1, 'Alice Cahill', 51.92893, -10.27699),
                 ],
             ],
             [
                 ['latitude', 'asc'],
                 [
-                    new Customer(12, 'Christina McArdle', '52.986375', '-6.043701'),
-                    new Customer(1, 'Alice Cahill', '51.92893', '-10.27699'),
+                    new Customer(12, 'Christina McArdle', 52.986375, -6.043701),
+                    new Customer(1, 'Alice Cahill', 51.92893, -10.27699),
                 ],
                 [
-                    new Customer(1, 'Alice Cahill', '51.92893', '-10.27699'),
-                    new Customer(12, 'Christina McArdle', '52.986375', '-6.043701'),
+                    new Customer(1, 'Alice Cahill', 51.92893, -10.27699),
+                    new Customer(12, 'Christina McArdle', 52.986375, -6.043701),
                 ],
             ],
             [
                 ['latitude', 'desc'],
                 [
-                    new Customer(12, 'Christina McArdle', '52.986375', '-6.043701'),
-                    new Customer(1, 'Alice Cahill', '51.92893', '-10.27699'),
+                    new Customer(12, 'Christina McArdle', 52.986375, -6.043701),
+                    new Customer(1, 'Alice Cahill', 51.92893, -10.27699),
                 ],
                 [
-                    new Customer(12, 'Christina McArdle', '52.986375', '-6.043701'),
-                    new Customer(1, 'Alice Cahill', '51.92893', '-10.27699'),
+                    new Customer(12, 'Christina McArdle', 52.986375, -6.043701),
+                    new Customer(1, 'Alice Cahill', 51.92893, -10.27699),
                 ],
             ],
             [
                 ['longitude', 'asc'],
                 [
-                    new Customer(12, 'Christina McArdle', '52.986375', '-6.043701'),
-                    new Customer(1, 'Alice Cahill', '51.92893', '-10.27699'),
+                    new Customer(12, 'Christina McArdle', 52.986375, -6.043701),
+                    new Customer(1, 'Alice Cahill', 51.92893, -10.27699),
                 ],
                 [
-                    new Customer(1, 'Alice Cahill', '51.92893', '-10.27699'),
-                    new Customer(12, 'Christina McArdle', '52.986375', '-6.043701'),
+                    new Customer(1, 'Alice Cahill', 51.92893, -10.27699),
+                    new Customer(12, 'Christina McArdle', 52.986375, -6.043701),
                 ],
             ],
             [
                 ['longitude', 'desc'],
                 [
-                    new Customer(12, 'Christina McArdle', '52.986375', '-6.043701'),
-                    new Customer(1, 'Alice Cahill', '51.92893', '-10.27699'),
+                    new Customer(12, 'Christina McArdle', 52.986375, -6.043701),
+                    new Customer(1, 'Alice Cahill', 51.92893, -10.27699),
                 ],
                 [
-                    new Customer(12, 'Christina McArdle', '52.986375', '-6.043701'),
-                    new Customer(1, 'Alice Cahill', '51.92893', '-10.27699'),
+                    new Customer(12, 'Christina McArdle', 52.986375, -6.043701),
+                    new Customer(1, 'Alice Cahill', 51.92893, -10.27699),
                 ],
             ],
         ];

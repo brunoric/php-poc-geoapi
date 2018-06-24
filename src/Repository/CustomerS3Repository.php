@@ -8,12 +8,15 @@
  * file that was distributed with this source code.
  */
 
+// declare(strict_types=1);
+
 namespace App\Repository;
 
 use App\Entity\Customer;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException as ClientException;
 use Psr\Log\LoggerInterface;
+use GuzzleHttp\RequestOptions;
 
 class CustomerS3Repository implements RepositoryInterface
 {
@@ -36,7 +39,14 @@ class CustomerS3Repository implements RepositoryInterface
      */
     public function getResponse()
     {
-        return $this->httpClient->request('GET', self::CUSTOMER_S3_LIST);
+        return $this->httpClient->request(
+            'GET',
+            self::CUSTOMER_S3_LIST,
+            [
+                RequestOptions::SYNCHRONOUS => true,
+                RequestOptions::STREAM => false
+            ]
+        );
     }
 
     /**
@@ -166,6 +176,6 @@ class CustomerS3Repository implements RepositoryInterface
     public function fetch(int $id): Customer
     {
         // TODO: Implement fetch() method.
-        return new Customer(1, 1, 1, 1);
+        return new Customer(1, 'dummy', 1, 1);
     }
 }

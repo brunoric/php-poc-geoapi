@@ -8,6 +8,8 @@
  * file that was distributed with this source code.
  */
 
+declare(strict_types=1);
+
 namespace App\Tests\Entity;
 
 use PHPUnit\Framework\TestCase;
