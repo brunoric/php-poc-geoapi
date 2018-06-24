@@ -110,27 +110,53 @@ class CustomerS3Repository implements RepositoryInterface
         );
     }
 
-    /**
-     * @param string $order
-     * @return array
-     */
-    public function orderByCriteria(string $order = 'by_name_asc'): array
+    protected function numericComparison($a, $b, $direction)
     {
-        // TODO: Implement orderByCriteria() logic.
-        return $this->parseResultsFromResponse();
+        if ($direction == 'asc') {
+            return $a - $b;
+        }
+
+        return $b - $a;
+    }
+
+    protected function stringComparison($a, $b, $direction)
+    {
+        if ($direction == 'asc') {
+            return strcmp($a, $b);
+        }
+        return strcmp($b, $a);
+    }
+
+    public function orderByCriteria($property = 'name', $direction = 'asc')
+    {
+        $results = $this->parseResultsFromResponse();
+        usort($results, function($a, $b) use ($property, $direction) {
+
+            $propertyA = $a->{$property};
+            $propertyB = $b->{$property};
+
+            if (is_numeric($propertyA) && is_numeric($propertyB)) {
+                return $this->numericComparison($propertyA, $propertyB, $direction);
+            }
+
+            return $this->stringComparison($propertyA, $propertyB, $direction);
+        });
+
+        return $results;
     }
 
     /**
-     * @param string|null $order
+     * @param null|string $property
+     * @param null|string $direction
      * @return array
      */
-    public function fetchAll($order = null): array
+    public function fetchAll(?string $property = null, ?string $direction = null): array
     {
-        if ($order) {
-            return $this->orderByCriteria($order);
+        if (!$property && !$direction) {
+            return $this->parseResultsFromResponse();
         }
 
-        return $this->parseResultsFromResponse();
+        return $this->orderByCriteria($property, $direction);
     }
 
     /**

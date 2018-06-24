@@ -140,6 +140,127 @@ PAYLOAD;
         $this->assertEquals([], $results);
     }
 
+    public function criteriaAndCustomersProvider()
+    {
+        return [
+            [
+                ['name', 'asc'],
+                [
+                    new Customer(12, 'Christina McArdle', '52.986375', '-6.043701'),
+                    new Customer(1, 'Alice Cahill', '51.92893', '-10.27699'),
+                ],
+                [
+                    new Customer(1, 'Alice Cahill', '51.92893', '-10.27699'),
+                    new Customer(12, 'Christina McArdle', '52.986375', '-6.043701'),
+                ],
+            ],
+            [
+                ['name', 'desc'],
+                [
+                    new Customer(12, 'Christina McArdle', '52.986375', '-6.043701'),
+                    new Customer(1, 'Alice Cahill', '51.92893', '-10.27699'),
+                ],
+                [
+                    new Customer(12, 'Christina McArdle', '52.986375', '-6.043701'),
+                    new Customer(1, 'Alice Cahill', '51.92893', '-10.27699'),
+                ],
+            ],
+            [
+                ['id', 'asc'],
+                [
+                    new Customer(12, 'Christina McArdle', '52.986375', '-6.043701'),
+                    new Customer(1, 'Alice Cahill', '51.92893', '-10.27699'),
+                ],
+                [
+                    new Customer(1, 'Alice Cahill', '51.92893', '-10.27699'),
+                    new Customer(12, 'Christina McArdle', '52.986375', '-6.043701'),
+                ],
+            ],
+            [
+                ['id', 'desc'],
+                [
+                    new Customer(12, 'Christina McArdle', '52.986375', '-6.043701'),
+                    new Customer(1, 'Alice Cahill', '51.92893', '-10.27699'),
+                ],
+                [
+                    new Customer(12, 'Christina McArdle', '52.986375', '-6.043701'),
+                    new Customer(1, 'Alice Cahill', '51.92893', '-10.27699'),
+                ],
+            ],
+            [
+                ['latitude', 'asc'],
+                [
+                    new Customer(12, 'Christina McArdle', '52.986375', '-6.043701'),
+                    new Customer(1, 'Alice Cahill', '51.92893', '-10.27699'),
+                ],
+                [
+                    new Customer(1, 'Alice Cahill', '51.92893', '-10.27699'),
+                    new Customer(12, 'Christina McArdle', '52.986375', '-6.043701'),
+                ],
+            ],
+            [
+                ['latitude', 'desc'],
+                [
+                    new Customer(12, 'Christina McArdle', '52.986375', '-6.043701'),
+                    new Customer(1, 'Alice Cahill', '51.92893', '-10.27699'),
+                ],
+                [
+                    new Customer(12, 'Christina McArdle', '52.986375', '-6.043701'),
+                    new Customer(1, 'Alice Cahill', '51.92893', '-10.27699'),
+                ],
+            ],
+            [
+                ['longitude', 'asc'],
+                [
+                    new Customer(12, 'Christina McArdle', '52.986375', '-6.043701'),
+                    new Customer(1, 'Alice Cahill', '51.92893', '-10.27699'),
+                ],
+                [
+                    new Customer(1, 'Alice Cahill', '51.92893', '-10.27699'),
+                    new Customer(12, 'Christina McArdle', '52.986375', '-6.043701'),
+                ],
+            ],
+            [
+                ['longitude', 'desc'],
+                [
+                    new Customer(12, 'Christina McArdle', '52.986375', '-6.043701'),
+                    new Customer(1, 'Alice Cahill', '51.92893', '-10.27699'),
+                ],
+                [
+                    new Customer(12, 'Christina McArdle', '52.986375', '-6.043701'),
+                    new Customer(1, 'Alice Cahill', '51.92893', '-10.27699'),
+                ],
+            ],
+        ];
+    }
+
+    /**
+     * @dataProvider criteriaAndCustomersProvider
+     * @covers \App\Repository\CustomerS3Repository::numericComparison
+     * @covers \App\Repository\CustomerS3Repository::stringComparison
+     * @covers \App\Repository\CustomerS3Repository::orderByCriteria
+     * @param array $criteria
+     * @param array $customers
+     * @param array $orderedCustomers
+     */
+    public function testOrderByCriteria(array $criteria, array $customers, array $orderedCustomers)
+    {
+        $customerRepositoryMock = $this
+            ->getMockBuilder(CustomerS3Repository::class)
+            ->setConstructorArgs([$this->logger])
+            ->setMethods(['parseResultsFromResponse'])
+            ->getMock();
+        $customerRepositoryMock
+            ->expects($this->exactly(intval(empty($order))))
+            ->method('parseResultsFromResponse')
+            ->willReturn($customers);
+
+        /** @var CustomerS3Repository $customerRepositoryMock */
+        $results = $customerRepositoryMock->orderByCriteria($criteria[0], $criteria[1]);
+
+        $this->assertEquals($orderedCustomers, $results);
+    }
+
     public function orderProvider()
     {
         return [

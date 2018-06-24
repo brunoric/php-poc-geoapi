@@ -12,7 +12,7 @@ namespace App\Repository;
 
 interface RepositoryInterface
 {
-    public function fetchAll($order = null);
+    public function fetchAll(?string $property = null, ?string $direction = null);
 
     public function fetch(int $id);
 }
