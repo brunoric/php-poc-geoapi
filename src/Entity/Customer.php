@@ -35,6 +35,11 @@ class Customer
     public $longitude;
 
     /**
+     * @var float
+     */
+    public $distance;
+
+    /**
      * @return int
      */
     public function getId(): int
@@ -99,18 +104,36 @@ class Customer
     }
 
     /**
+     * @return float
+     */
+    public function getDistance(): float
+    {
+        return $this->distance;
+    }
+
+    /**
+     * @param float $distance
+     */
+    public function setDistance(float $distance): void
+    {
+        $this->distance = $distance;
+    }
+
+    /**
      * Customer constructor.
      * @param int $id
      * @param string $name
      * @param float $latitude
      * @param float $longitude
+     * @param null|float $distance
      */
-    public function __construct(int $id, string $name, float $latitude, float $longitude)
+    public function __construct(int $id, string $name, float $latitude, float $longitude, ?float $distance = null)
     {
         $this->setId($id);
         $this->setName($name);
         $this->setLatitude($latitude);
         $this->setLongitude($longitude);
+        $this->setDistance($distance?:$this->calculateDistanceTo($latitude, $longitude));
     }
 
     /**
@@ -126,5 +149,38 @@ class Customer
             floatval($customer['latitude']),
             floatval($customer['longitude'])
         );
+    }
+
+    /**
+     * Calculates distance between two points on Earth using the Vincenty formula.
+     *
+     * @see https://en.wikipedia.org/wiki/Great-circle_distance
+     *
+     * @param float $latitude
+     * @param float $longitude
+     * @param float $latitudeFrom
+     * @param float $longitudeFrom
+     * @param float $radius of earth in meters
+     * @return float Distance in meters
+     */
+    public static function calculateDistanceTo(
+        float $latitude,
+        float $longitude,
+        float $latitudeFrom = 53.339428,
+        float $longitudeFrom = -6.257664,
+        float $radius = 6371000
+    )
+    {
+        $latitudeA = deg2rad($latitudeFrom);
+        $longitudeA = deg2rad($longitudeFrom);
+        $latitudeB = deg2rad($latitude);
+        $longitudeB = deg2rad($longitude);
+
+        $longitudeDelta = $longitudeB - $longitudeA;
+        $a = pow(cos($latitudeB) * sin($longitudeDelta), 2) +
+            pow(cos($latitudeA) * sin($latitudeB) - sin($latitudeA) * cos($latitudeB) * cos($longitudeDelta), 2);
+        $b = sin($latitudeA) * sin($latitudeB) + cos($latitudeA) * cos($latitudeB) * cos($longitudeDelta);
+
+        return atan2(sqrt($a), $b) * $radius;
     }
 }
