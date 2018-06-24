@@ -28,6 +28,11 @@ class CustomerS3Repository implements RepositoryInterface
     protected $httpClient;
     protected $logger;
 
+    /**
+     * CustomerS3Repository constructor.
+     *
+     * @param LoggerInterface $logger
+     */
     public function __construct(LoggerInterface $logger)
     {
         $this->httpClient = new Client();
@@ -35,6 +40,8 @@ class CustomerS3Repository implements RepositoryInterface
     }
 
     /**
+     * Calls Amazon S3 bucket URL to get the customer list.
+     *
      * @return mixed|\Psr\Http\Message\ResponseInterface
      * @throws ClientException
      */
@@ -51,6 +58,8 @@ class CustomerS3Repository implements RepositoryInterface
     }
 
     /**
+     * Parses the response from S3, doing error handling and hydrating the customer list of objects in case of success.
+     *
      * @return array
      */
     public function parseResultsFromResponse()
@@ -94,6 +103,8 @@ class CustomerS3Repository implements RepositoryInterface
     }
 
     /**
+     * Log wrapper for HTTP Client exceptions.
+     *
      * @param ClientException $exception
      */
     protected function logClientException(ClientException $exception)
@@ -108,6 +119,8 @@ class CustomerS3Repository implements RepositoryInterface
     }
 
     /**
+     * Log wrapper for generic exceptions.
+     *
      * @param \Exception $exception
      */
     protected function logGenericException(\Exception $exception)
@@ -121,6 +134,14 @@ class CustomerS3Repository implements RepositoryInterface
         );
     }
 
+    /**
+     * Array walk function to be used by the sort algorithm when sorting numbers.
+     *
+     * @param $a
+     * @param $b
+     * @param $direction
+     * @return mixed
+     */
     protected function numericComparison($a, $b, $direction)
     {
         if ($direction == 'asc') {
@@ -130,6 +151,14 @@ class CustomerS3Repository implements RepositoryInterface
         return $b - $a;
     }
 
+    /**
+     * Array walk function to be used by the sort algorithm when sorting strings.
+     *
+     * @param $a
+     * @param $b
+     * @param $direction
+     * @return int
+     */
     protected function stringComparison($a, $b, $direction)
     {
         if ($direction == 'asc') {
@@ -138,6 +167,13 @@ class CustomerS3Repository implements RepositoryInterface
         return strcmp($b, $a);
     }
 
+    /**
+     * Orders a list of customer based on property and direction criteria.
+     *
+     * @param string $property
+     * @param string $direction
+     * @return array
+     */
     public function orderByCriteria($property = 'name', $direction = 'asc')
     {
         if (!property_exists(Customer::class, $property))
@@ -166,6 +202,8 @@ class CustomerS3Repository implements RepositoryInterface
     }
 
     /**
+     * Fetches all customers from the repository.
+     *
      * @param null|string $property
      * @param null|string $direction
      * @return array
@@ -180,6 +218,9 @@ class CustomerS3Repository implements RepositoryInterface
     }
 
     /**
+     * Fetches a single customer from the repository.
+     *
+     * @todo Since is not part of the critical path for the PoC, this might be developed in the future.
      * @param int $id
      * @return Customer
      */

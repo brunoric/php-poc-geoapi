@@ -26,6 +26,9 @@ class CustomerControllerTest extends WebTestCase
         $this->logger = new NullLogger();
     }
 
+    /**
+     * @return array
+     */
     public function criteriaProvider()
     {
         return [
@@ -41,7 +44,7 @@ class CustomerControllerTest extends WebTestCase
     }
 
     /**
-     * This is a functional test which
+     * E2E functional test. Not part of the default UT suite.
      *
      * @dataProvider criteriaProvider
      * @param string $property

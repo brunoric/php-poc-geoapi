@@ -27,6 +27,12 @@ class CustomerController
     protected $logger;
     protected $repository;
 
+    /**
+     * CustomerController constructor.
+     *
+     * @param LoggerInterface $logger
+     * @param RepositoryInterface $repository
+     */
     public function __construct(LoggerInterface $logger, RepositoryInterface $repository)
     {
         $this->logger = $logger;
@@ -34,6 +40,9 @@ class CustomerController
     }
 
     /**
+     * Controller action to return a formatted JSON response with a list of customer details based on the criterias
+     * passed as arguments.
+     *
      * @Route("customer/list/{property}/{direction}")
      * @param string|null $property
      * @param string|null $direction

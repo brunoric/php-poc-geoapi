@@ -121,6 +121,7 @@ class Customer
 
     /**
      * Customer constructor.
+     *
      * @param int $id
      * @param string $name
      * @param float $latitude
@@ -137,6 +138,8 @@ class Customer
     }
 
     /**
+     * Builds a Customer object from a JSON string.
+     *
      * @param string $customerJsonData
      * @return Customer
      */
