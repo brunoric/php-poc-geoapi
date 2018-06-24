@@ -23,6 +23,7 @@ class CustomerS3Repository implements RepositoryInterface
     const CUSTOMER_S3_LIST = 'https://s3.amazonaws.com/intercom-take-home-test/customers.txt';
     const MSG_ERROR_S3_FETCH = 'Error: Unable to fetch from S3';
     const MSG_ERROR_S3_FORMAT = 'Error: Data format invalid from S3';
+    const MSG_ERROR_INVALID_PROPERTY = 'Error: customer invalid property';
 
     protected $httpClient;
     protected $logger;
@@ -139,6 +140,15 @@ class CustomerS3Repository implements RepositoryInterface
 
     public function orderByCriteria($property = 'name', $direction = 'asc')
     {
+        if (!property_exists(Customer::class, $property))
+        {
+            $this->logger->error(
+                self::MSG_ERROR_INVALID_PROPERTY
+            );
+
+            return [];
+        }
+
         $results = $this->parseResultsFromResponse();
         usort($results, function($a, $b) use ($property, $direction) {
 

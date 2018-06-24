@@ -253,7 +253,7 @@ PAYLOAD;
      * @param array $customers
      * @param array $orderedCustomers
      */
-    public function testOrderByCriteria(array $criteria, array $customers, array $orderedCustomers)
+    public function testOrderByCriteria_valid_property(array $criteria, array $customers, array $orderedCustomers)
     {
         $customerRepositoryMock = $this
             ->getMockBuilder(CustomerS3Repository::class)
@@ -269,6 +269,48 @@ PAYLOAD;
         $results = $customerRepositoryMock->orderByCriteria($criteria[0], $criteria[1]);
 
         $this->assertEquals($orderedCustomers, $results);
+    }
+
+    public function invalidPropertyProvider()
+    {
+        return [
+            [
+                ['lorem', 'asc'],
+                [
+                    new Customer(12, 'Christina McArdle', 52.986375, -6.043701),
+                    new Customer(1, 'Alice Cahill', 51.92893, -10.27699),
+                ],
+            ],
+            [
+                ['ipsum', 'asc'],
+                [
+                    new Customer(12, 'Christina McArdle', 52.986375, -6.043701),
+                    new Customer(1, 'Alice Cahill', 51.92893, -10.27699),
+                ],
+            ]
+        ];
+    }
+
+    /**
+     * @dataProvider invalidPropertyProvider
+     * @param array $criteria
+     * @param array $customers
+     */
+    public function testOrderByCriteria_invalid_property(array $criteria, array $customers)
+    {
+        $customerRepositoryMock = $this
+            ->getMockBuilder(CustomerS3Repository::class)
+            ->setConstructorArgs([$this->logger])
+            ->setMethods(['parseResultsFromResponse'])
+            ->getMock();
+        $customerRepositoryMock
+            ->expects($this->never())
+            ->method('parseResultsFromResponse')
+            ->willReturn($customers);
+
+        /** @var CustomerS3Repository $customerRepositoryMock */
+        $results = $customerRepositoryMock->orderByCriteria($criteria[0], $criteria[1]);
+        $this->assertEquals([], $results);
     }
 
     public function orderProvider()
