@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.org/brunoric/php-poc-geoapi.svg?branch=master)](https://travis-ci.org/brunoric/php-poc-geoapi)
 
 Very tiny Proof of Concept for calculating distances between two points in the globe. This application provides a small
-REST API to play with some customer data and its location.
+REST API to play with some customer data and their location.
 
 ## Installing and playing
 
